@@ -21,7 +21,7 @@ Currently highly work in progress
 
 ---
  
-This project is based on and forked awsome work  
+This project is based on and forked awesome work  
 [Yet another ImGui wrapper for Ruby: vaiorabbit's ruby-imgui: imgui-bindings ](https://github.com/vaiorabbit/ruby-imgui).
 
 The purpouses are   
