@@ -9,10 +9,11 @@
 
 @echo off
 setlocal enabledelayedexpansion
-set CMAKE_EXE=%1
-if "%CMAKE_EXE%"=="" (
-    set CMAKE_EXE="%PROGRAMFILES%\CMake\bin\cmake"
-)
+
+ set CMAKE_EXE=%1
+ if "%CMAKE_EXE%"=="" (
+     set CMAKE_EXE="cmake"
+ )
 
 pushd %~dp0
 if not exist build (

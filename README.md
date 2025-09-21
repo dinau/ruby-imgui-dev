@@ -1,90 +1,109 @@
-<!-- -*- mode:markdown; coding:utf-8; -*- -->
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
-# Yet another ImGui wrapper for Ruby #
+- [Dev version: Yet another ImGui wrapper for Ruby](#dev-version-yet-another-imgui-wrapper-for-ruby)
+  - [Purpouses](#purpouses)
+  - [Prerequisites](#prerequisites)
+  - [Executing example programs](#executing-example-programs)
+  - [Building libraries](#building-libraries)
+  - [License](#license)
 
-*   Created : 2019-01-05
-*   Last modified : 2025-02-02
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-<img src="https://raw.githubusercontent.com/vaiorabbit/ruby-imgui/master/doc/jpfont_test.png" width="250">
+### Dev version: Yet another ImGui wrapper for Ruby 
 
-## Prerequisites ##
+---
 
-*   Ruby interpreter
-    *   Tested on:
-        *   [Windows] https://rubyinstaller.org/downloads/ Ruby+Devkit
-            *   ruby 3.4.1 (2024-12-25 revision 48d4efcb85) +PRISM [x64-mingw-ucrt]
-        *   [macOS]
-            *   ruby 3.3.3 (2024-06-12 revision f1c7b6f435) [arm64-darwin23]
-        *   [Linux]
-            *   ruby 3.2.0 (2022-12-25 revision a528908271) [aarch64-linux]
-*   Ruby Gems
-    *   opengl-bindings2
-        *   gem install opengl-bindings2
-    *   ffi
-        *   gem install ffi
-*   Compiler
-    *   Tested on:
-        *   [Windows] gcc (Rev2, Built by MSYS2 project) 14.2.0
-        *   [macOS] Apple clang version 15.0.0 (clang-1500.3.9.4)
-        *   [Linux] gcc (Debian 10.2.1-6) 10.2.1 20210110
-*   CMake https://cmake.org/download/
+Currently highly work in progress
 
-<details>
-<summary>Older versions</summary>
+![alt](https://github.com/dinau/igruby_examples/raw/main/img/glfw_opengl3.png)
+#### Purpouses 
 
-*   Ruby interpreter
-    *   Tested on:
-        *   [Windows] https://rubyinstaller.org/downloads/ Ruby+Devkit
-            *   ruby 3.2.0 (2022-12-25 revision a528908271) [x64-mingw-ucrt]
-            *   ruby 3.1.2p20 (2022-04-12 revision 4491bb740a) [x64-mingw-ucrt]
-            *   ruby 3.0.2p107 (2021-07-07 revision 0db68f0233) [x64-mingw32]
-            *   ruby 3.0.0p0 (2020-12-25 revision 95aff21468) [x64-mingw32]
-            *   ruby 2.7.1p83 (2020-03-31 revision a0c7c23c9c) [x64-mingw32]
-        *   [macOS]
-            *   ruby 3.3.0 (2023-12-25 revision 5124f9ac75) [arm64-darwin23]
-            *   ruby 3.2.1 (2023-02-08 revision 31819e82c8) [arm64-darwin22]
-            *   ruby 3.2.0 (2022-12-25 revision a528908271) [arm64-darwin21]
-            *   ruby 3.1.2p20 (2022-04-12 revision 4491bb740a) [arm64-darwin21]
-            *   ruby 3.1.2p20 (2022-04-12 revision 4491bb740a) [arm64-darwin21]
-            *   ruby 3.1.0p0 (2021-12-25 revision fb4df44d16) [arm64-darwin20]
-            *   ruby 3.0.2p107 (2021-07-07 revision 0db68f0233) [arm64-darwin20]
-            *   ruby 3.0.1p64 (2021-04-05 revision 0fb782ee38) [arm64-darwin20]
-            *   ruby 3.0.0p0 (2020-12-25 revision 95aff21468) [arm64-darwin20]
-            *   ruby 2.7.0p0 (2019-12-25 revision 647ee6f091) [x86_64-darwin19]
-            *   ruby 2.6.0p0 (2018-12-25 revision 66547) [x86_64-darwin18]
+---
+ 
+This project is based on and forked awsome work  
+[Yet another ImGui wrapper for Ruby: vaiorabbit's ruby-imgui: imgui-bindings ](https://github.com/vaiorabbit/ruby-imgui).
 
-*   Compiler
-    *   Tested on:
-        *   [Windows] gcc (Rev7, Built by MSYS2 project) 12.2.0
-        *   [Windows] gcc (Rev10, Built by MSYS2 project) 11.2.0
-        *   [Windows] gcc (Rev1, Built by MSYS2 project) 8.2.1 20181214
-        *   [macOS] Apple clang version 14.0.0 (clang-1400.0.29.202), Target: arm64-apple-darwin22.2.0
-        *   [macOS] clang (Apple clang version 13.1.6 (clang-1316.0.21.2.5), Target: arm64-apple-darwin21.5.0)
-        *   [macOS] clang (Apple clang version 12.0.5 (clang-1205.0.22.11), Target: arm64-apple-darwin20.6.0)
-</details>
+The purpouses are   
+- [x] Currently for only Windows OS
+- [x] Adds raw `*.cpp` backends driver to `imgui.dll` e.g.,  
+   - [x] imgui/backends/[imgui_impl_glfw.cpp, imgui_impl_opengl3.cpp].  
+- [ ] `imgui.dll` may be divided to  
+   - [ ] imgui_glfw_opengl3.dll
+   - [ ] imgui_sdl2_opengl3.dll
+   - [ ] imgui_sdl2_renderer.dll 
+   - [ ] imgui_sdl3_self.dll (include renderer, sdlgpu3) 
+   - so on
+- [ ] Adds extra libraries to `imgui.dll` e.g.,
+   - [ ] ImNodes
+   - [ ] ImGuizmo
+   - [ ] ImSpinner
+   - [ ] ImToggle
+   - [ ] ImKnobs
+   - [ ] ImPlot
+   - [ ] ImPlot3D
+   - so on
+- [x] Enable CJK Input method IME flag `-D IMGUI_ENABLE_WIN32_DEFAULT_IME_FUNCTIONS` 
+- [ ] Set `ImDrawIdx` to 32bit type for `ImPlot` / `ImPlot3D`
 
-## Setting up and run sample ##
+#### Prerequisites
 
-1.  Install pre-built binaries
-    *   $ gem install imgui-bindings
-2.  Get GLFW or SDL2
-    *   put dylib/dll/so into sample/
-4.  Run test.rb
-    *   cd sample/
-    *   ruby test_glfw_opengl2.rb (GLFW)
-    *   ruby test_sld2_opengl2.rb (SDL2)
+---
 
-## Building binaries ##
+- [x] WindowsOS 10 or later
+- [ ] LinuxOS : N/A (Im not familiar with Ruby on Linux OS)
+- Use Ruby 3.4.5 or later : https://rubyinstaller.org/downloads/  
+- Install Ruby Devkit or MSys/MinGW at least,
 
-1.  Update submodules
-    *   git submodule update --recursive --remote
-2.  Update cimgui.c and cimgui.h
-    *   $ cd imgui_dll/cimgui/generator
-    *   $ luajit ./generator.lua clang ""
-3.  Build library
-    *   Use build_imgui_macos.sh, etc.
+  ```sh
+  pacman -S make mingw-w64-x86_64-{gcc,SDL2,pkg-config,glfw} 
+  ```
 
-## License ##
+#### Executing example programs
+
+---
+
+First to avoid confusion, uninstall `imgui-bindings`
+
+```sh
+gem uninstall imgui-bindings
+```
+
+Download files,
+
+```sh
+pwd 
+my_dev_folder
+git clone --recursive https://github.com/dinau/ruby-imgui-dev
+git clone             https://github.com/dinau/igruby_examples
+```
+
+Install libraries with bundle,
+
+```sh
+cd igruby_examples
+bundle install 
+```
+
+Execute examples,
+
+```sh
+pwd 
+igruby_examples
+cd glfw_opengl3     
+r.bat           # or double click glfw_oepngl3.rbw in Windows file explorer
+```
+
+#### Building libraries
+
+---
+
+WIP: Same as original
+
+
+#### License 
+
+---
 
 All shared libraries found in `lib` directory are built on top of these products and are available under the terms of the MIT License.
 *   cimgui ( https://github.com/cimgui/cimgui )
@@ -96,7 +115,7 @@ All shared libraries found in `lib` directory are built on top of these products
 
 All ruby codes here are available under the terms of the zlib/libpng License ( http://opensource.org/licenses/Zlib ).
 
-```
+```text
 Ruby-Imgui : Yet another ImGui wrapper for Ruby
 Copyright (c) 2019-2025 vaiorabbit <http://twitter.com/vaiorabbit>
 
