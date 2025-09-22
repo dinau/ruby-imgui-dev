@@ -7,6 +7,11 @@
   - [Executing example programs](#executing-example-programs)
   - [Building libraries](#building-libraries)
   - [Gallery](#gallery)
+    - [ImGui-Knobs / CImGui-Knobs](#imgui-knobs--cimgui-knobs)
+    - [ImSpinner / CImSpinner](#imspinner--cimspinner)
+    - [Iconfonts viewer](#iconfonts-viewer)
+    - [Image view](#image-view)
+    - [Show CJK fonts](#show-cjk-fonts)
   - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -124,7 +129,7 @@ WIP: Same as original
 
 From [igRuby example project](https://github.com/dinau/igruby_examples)
 
-#### ImGui-Knobs / CImGui-Knobs
+##### ImGui-Knobs / CImGui-Knobs
 
 ---
 
@@ -134,7 +139,7 @@ From [igRuby example project](https://github.com/dinau/igruby_examples)
 
 ![alt](https://github.com/dinau/igruby_examples/raw/main/img/glfw_opengl3_imknobs.png)  
 
-#### ImSpinner / CImSpinner
+##### ImSpinner / CImSpinner
 
 ---
 
@@ -144,19 +149,19 @@ From [igRuby example project](https://github.com/dinau/igruby_examples)
 
 ![alt](https://github.com/dinau/igruby_examples/raw/main/img/glfw_opengl3_imspinner.gif)
 
-#### Iconfonts viewer
+##### Iconfonts viewer
 
 ---
 
 ![alt](https://github.com/dinau/igruby_examples/raw/main/img/glfw_opengl3_iconfont_viewer.png)
 
-#### Image view
+##### Image view
 
 ---
 
 ![alt](https://github.com/dinau/igruby_examples/raw/main/img/glfw_opengl3.png)  
 
-#### Show CJK fonts
+##### Show CJK fonts
 
 ---
 
