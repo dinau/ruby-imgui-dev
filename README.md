@@ -4,6 +4,7 @@
 - [Dev version: Yet another ImGui wrapper for Ruby](#dev-version-yet-another-imgui-wrapper-for-ruby)
   - [Purpouses](#purpouses)
   - [Prerequisites](#prerequisites)
+  - [Install dlls on Windows OS](#install-dlls-on-windows-os)
   - [Executing example programs](#executing-example-programs)
   - [Building libraries](#building-libraries)
   - [Gallery](#gallery)
@@ -35,21 +36,29 @@ The purpouses are
 - [x] Currently for only Windows OS
 - [x] Adds raw `*.cpp` backend drivers to `imgui.dll` e.g.,  
    - [x] imgui/backends/[imgui_impl_glfw.cpp, imgui_impl_opengl3.cpp].  
+   - [x] imgui/backends/imgui_impl_sdl2.cpp
 - [ ] `imgui.dll` may be divided to  
    - [ ] imgui_glfw_opengl3.dll
    - [ ] imgui_sdl2_opengl3.dll
    - [ ] imgui_sdl2_renderer.dll 
    - [ ] imgui_sdl3_self.dll (include renderer, sdlgpu3) 
    - so on
-- [x] Adds extra libraries to `imgui.dll` e.g.,
-   - [x] ImSpinner
-   - [x] ImKnobs
-   - [ ] ImNodes
-   - [ ] ImGuizmo
-   - [ ] ImToggle
-   - [ ] ImPlot
-   - [ ] ImPlot3D
-   - so on
+- [x] Status: Adds extra libraries to `imgui.dll` e.g.,
+   
+   |                    | Demo | Compilation / link | Full FFI library (\*.rb) |
+   |:------------------:|:----:|:------------------:|:-----------------------:|
+   | ImGuiColorTextEdit |      |          v         |                         |
+   |    ImGui_Toggle    |   v  |          v         |                         |
+   |   ImGuiFileDialog  |      |          v         |                         |
+   |     ImGui-Knobs    |   v  |          v         |            v            |
+   |      ImGuizmo      |      |          v         |                         |
+   |       ImNodes      |      |          v         |                         |
+   |       ImPlot       |      |          v         |                         |
+   |      ImPlot3D      |      |          v         |                         |
+   |      ImPlot3D      |      |          v         |                         |
+   |      ImSpinner     |   v  |          v         |                         |
+
+
 - [x] Enable CJK Input method IME flag `-D IMGUI_ENABLE_WIN32_DEFAULT_IME_FUNCTIONS` 
 - [ ] Set `ImDrawIdx` to 32bit type for `ImPlot` / `ImPlot3D`
 
@@ -61,6 +70,18 @@ The purpouses are
 - [ ] LinuxOS : N/A (Im not familiar with Ruby on Linux OS)
 - Use Ruby 3.4.5 or later : https://rubyinstaller.org/downloads/  
   Ok: without Devkit
+
+#### Install dlls on Windows OS
+
+---
+
+```sh
+pwd 
+my_dev_folder
+git clone https://github.com/dinau/igruby_examples
+cd igruby_examples
+copy dlls_extra\*.dll c:\Ruby34-x64\bin\       # Specify your Ruby bin folder 
+```
 
 #### Executing example programs
 
@@ -78,7 +99,6 @@ Download files,
 pwd 
 my_dev_folder
 git clone --recursive https://github.com/dinau/ruby-imgui-dev
-git clone             https://github.com/dinau/igruby_examples
 ```
 
    Folder structure,
@@ -116,9 +136,11 @@ Note: Currnetly under bundler enviroment only
 - Install Ruby Devkit or MSys/MinGW, at least
 
   ```sh
-  pacman -S make mingw-w64-x86_64-{gcc,SDL2,pkg-config,glfw} 
+  pacman -S make mingw-w64-x86_64-{gcc,clang,SDL2,pkg-config,glfw} 
   ```
+
 - GCC 15.2.0
+- Clang 21.1.1
 
 WIP: Same as original
 
