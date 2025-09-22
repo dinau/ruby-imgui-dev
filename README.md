@@ -122,23 +122,43 @@ WIP: Same as original
 
 ---
 
-ImKnobs 
+From [igRuby example project](https://github.com/dinau/igruby_examples)
 
-![alt](https://github.com/dinau/igruby_examples/raw/main/img/glfw_opengl3_imknobs.png)
+#### ImGui-Knobs / CImGui-Knobs
 
-ImSpinner 
+---
+
+[ImGui-Knobs](https://github.com/altschuler/imgui-knobs) / [CImGui-Knobs](https://github.com/dinau/cimgui-knobs)
+
+[glfw_opengl3_imknobs.rb](https://github.com/dinau/igruby_examples/raw/main/glfw_opengl3_imknobs/glfw_opengl3_imknobs.rb)
+
+![alt](https://github.com/dinau/igruby_examples/raw/main/img/glfw_opengl3_imknobs.png)  
+
+#### ImSpinner / CImSpinner
+
+---
+
+[ImSpinner](https://github.com/dalerank/imspinner) / [CImSpinner](https://github.com/dinau/cimspinner)
+
+[glfw_opengl3_imspinner.rb](https://github.com/dinau/igruby_examples/raw/main/glfw_opengl3_imspinner/glfw_opengl3_imspinner.rb)  
 
 ![alt](https://github.com/dinau/igruby_examples/raw/main/img/glfw_opengl3_imspinner.gif)
 
-Iconfonts viewer
+#### Iconfonts viewer
+
+---
 
 ![alt](https://github.com/dinau/igruby_examples/raw/main/img/glfw_opengl3_iconfont_viewer.png)
 
-Image view
+#### Image view
+
+---
 
 ![alt](https://github.com/dinau/igruby_examples/raw/main/img/glfw_opengl3.png)  
 
-Show CJK fonts
+#### Show CJK fonts
+
+---
 
 ![alt](https://github.com/dinau/igruby_examples/raw/main/img/glfw_opengl3_jp.png)
 
