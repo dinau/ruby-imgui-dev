@@ -2875,9 +2875,9 @@ module ImGui
   end
 
   def self.import_symbols(output_error = false)
-    callback :ImDrawCallback, [ImDrawList, ImDrawCmd], :void 
-    callback :ImGuiInputTextCallback, [ImGuiInputTextCallbackData], :int 
-    callback :ImGuiSizeCallback, [ImGuiSizeCallbackData], :void 
+    callback :ImDrawCallback, [ImDrawList, ImDrawCmd], :void
+    callback :ImGuiInputTextCallback, [ImGuiInputTextCallbackData], :int
+    callback :ImGuiSizeCallback, [ImGuiSizeCallbackData], :void
 
     entries = [
       [:ImDrawCmd_GetTexID, [:pointer], :uint64],
@@ -3342,7 +3342,7 @@ module ImGui
       [:igIsKeyPressed, [:int, :bool], :bool],
       [:igIsKeyReleased, [:int], :bool],
       [:igIsMouseClicked, [:int, :bool], :bool],
-      [:igIsMouseDoubleClicked, [:int], :bool],
+      [:igIsMouseDoubleClicked_Nil, [:int], :bool],
       [:igIsMouseDown, [:int], :bool],
       [:igIsMouseDragging, [:int, :float], :bool],
       [:igIsMouseHoveringRect, [ImVec2.by_value, ImVec2.by_value, :bool], :bool],
@@ -4882,7 +4882,7 @@ module ImGui
   # arg: button(ImGuiMouseButton)
   # ret: bool
   def self.IsMouseDoubleClicked(button)  # did mouse button double-clicked? Same as GetMouseClickedCount() == 2. (note that a double-click will also report IsMouseClicked() == true)
-    igIsMouseDoubleClicked(button)
+    igIsMouseDoubleClicked_Nil(button)
   end
 
   # arg: button(ImGuiMouseButton)
@@ -6389,7 +6389,7 @@ module ImGui
   end
 
   def self.SetWindowFocus(*arg)  # (not recommended) set current window to be focused / top-most. prefer using SetNextWindowFocus().
-    # arg: 
+    # arg:
     # ret: void
     return igSetWindowFocus_Nil() if arg.length == 0 && ()
     # arg: 0:name(const char*)

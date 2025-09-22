@@ -4,4 +4,5 @@ cd build
 
 cmake -G "MSYS Makefiles" -D CMAKE_BUILD_TYPE=Release -D BUILD_SHARED_LIBS=ON -D CMAKE_C_COMPILER=gcc ..
 make
+cp -fr imgui.dll ../../lib/
 cd ..

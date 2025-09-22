@@ -6,6 +6,7 @@
   - [Prerequisites](#prerequisites)
   - [Executing example programs](#executing-example-programs)
   - [Building libraries](#building-libraries)
+  - [Gallery](#gallery)
   - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
@@ -16,7 +17,8 @@
 
 Currently highly work in progress
 
-![alt](https://github.com/dinau/igruby_examples/raw/main/img/glfw_opengl3.png)
+![alt](https://github.com/dinau/igruby_examples/raw/main/img/glfw_opengl3_imknobs.png)
+
 #### Purpouses 
 
 ---
@@ -26,7 +28,7 @@ This project is based on and forked awesome work
 
 The purpouses are   
 - [x] Currently for only Windows OS
-- [x] Adds raw `*.cpp` backends driver to `imgui.dll` e.g.,  
+- [x] Adds raw `*.cpp` backend drivers to `imgui.dll` e.g.,  
    - [x] imgui/backends/[imgui_impl_glfw.cpp, imgui_impl_opengl3.cpp].  
 - [ ] `imgui.dll` may be divided to  
    - [ ] imgui_glfw_opengl3.dll
@@ -34,12 +36,12 @@ The purpouses are
    - [ ] imgui_sdl2_renderer.dll 
    - [ ] imgui_sdl3_self.dll (include renderer, sdlgpu3) 
    - so on
-- [ ] Adds extra libraries to `imgui.dll` e.g.,
+- [x] Adds extra libraries to `imgui.dll` e.g.,
+   - [x] ImSpinner
+   - [x] ImKnobs
    - [ ] ImNodes
    - [ ] ImGuizmo
-   - [ ] ImSpinner
    - [ ] ImToggle
-   - [ ] ImKnobs
    - [ ] ImPlot
    - [ ] ImPlot3D
    - so on
@@ -53,11 +55,7 @@ The purpouses are
 - [x] WindowsOS 10 or later
 - [ ] LinuxOS : N/A (Im not familiar with Ruby on Linux OS)
 - Use Ruby 3.4.5 or later : https://rubyinstaller.org/downloads/  
-- Install Ruby Devkit or MSys/MinGW at least,
-
-  ```sh
-  pacman -S make mingw-w64-x86_64-{gcc,SDL2,pkg-config,glfw} 
-  ```
+  Ok: without Devkit
 
 #### Executing example programs
 
@@ -85,7 +83,7 @@ cd igruby_examples
 bundle install 
 ```
 
-Execute examples,
+Execute one of examples,
 
 ```sh
 pwd 
@@ -94,11 +92,46 @@ cd glfw_opengl3
 r.bat           # or double click glfw_oepngl3.rbw in Windows file explorer
 ```
 
+Note: Currnetly under bundler enviroment only 
+
+
 #### Building libraries
 
 ---
 
+- Install Ruby Devkit or MSys/MinGW, at least
+
+  ```sh
+  pacman -S make mingw-w64-x86_64-{gcc,SDL2,pkg-config,glfw} 
+  ```
+- GCC 15.2.0
+
 WIP: Same as original
+
+
+#### Gallery
+
+---
+
+ImKnobs 
+
+![alt](https://github.com/dinau/igruby_examples/raw/main/img/glfw_opengl3_imknobs.png)
+
+ImSpinner 
+
+![alt](https://github.com/dinau/igruby_examples/raw/main/img/glfw_opengl3_imSpinner.gif)
+
+Iconfonts viewer
+
+![alt](https://github.com/dinau/igruby_examples/raw/main/img/glfw_opengl3_iconfont_viewer.png)
+
+Image view
+
+![alt](https://github.com/dinau/igruby_examples/raw/main/img/glfw_opengl3.png)  
+
+Show CJK fonts
+
+![alt](https://github.com/dinau/igruby_examples/raw/main/img/glfw_opengl3_jp.png)
 
 
 #### License 

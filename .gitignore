@@ -14,3 +14,5 @@ implot_dll/build_arm64/*
 implot_dll/bak/*
 third_party/SDL2-*
 third_party/glfw/*
+libc/cimgui-knobs/example/*
+*.html

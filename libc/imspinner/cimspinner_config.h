@@ -1,0 +1,2 @@
+
+#define IMSPINNER_DEMO

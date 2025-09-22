@@ -97,7 +97,7 @@ module ImNodes
     end
   end
 
-  def self.load_lib(libpath = './imnodes.dylib', output_error = false)
+  def self.load_lib(libpath = './imgui.dll', output_error = false)
     ffi_lib_flags :now, :global
     ffi_lib libpath
     import_symbols(output_error) unless @@imnodes_import_done
