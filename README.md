@@ -76,6 +76,15 @@ git clone --recursive https://github.com/dinau/ruby-imgui-dev
 git clone             https://github.com/dinau/igruby_examples
 ```
 
+   Folder structure,
+
+   ```txt
+   my_dev_folder
+    |--- igruby_examples
+    `--- ruby-imgui-dev
+   ```
+
+
 Install libraries with bundle,
 
 ```sh
@@ -119,7 +128,7 @@ ImKnobs
 
 ImSpinner 
 
-![alt](https://github.com/dinau/igruby_examples/raw/main/img/glfw_opengl3_imSpinner.gif)
+![alt](https://github.com/dinau/igruby_examples/raw/main/img/glfw_opengl3_imspinner.gif)
 
 Iconfonts viewer
 
