@@ -25,7 +25,7 @@
 
 Currently highly work in progress
 
-![alt](https://github.com/dinau/igruby_examples/raw/main/img/glfw_opengl3_imknobs.png)
+![alt](https://github.com/dinau/igruby_examples/raw/main/img/imknobs.png)
 
 #### Purpouses 
 
