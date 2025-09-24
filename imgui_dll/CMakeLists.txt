@@ -3,12 +3,32 @@ cmake_minimum_required(VERSION 3.0)
 
 set (CMAKE_CXX_STANDARD 26)
 
+# Remove debug info
+add_link_options("-Wl,-s")
+
+#set(CMAKE_SHARED_LINKER_FLAGS "-static-libgcc -static-libstdc++")
+#target_compile_options(imgui PRIVATE -static-libgcc -static-libstdc++)
+
+#-----------------
+# Silent warnings
+#-----------------
+# for gcc 15.2.0
+add_compile_options(-Wno-deprecated-enum-enum-conversion)
+add_compile_options(-Wno-deprecated-declarations)
+# for clang 21.1.1
+add_compile_options(-Wno-enum-enum-conversion)
+add_compile_options(-Wno-return-type-c-linkage)
+add_compile_options(-Wno-format)
+
+
 include_directories( ${CMAKE_CURRENT_LIST_DIR}/cimgui )
 include_directories( ${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui )
 include_directories( ${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/backends )
 
 include_directories(.)
 
+# This line must be deleted for extra libraries.
+# Because some of extra libraries use obsolete functions.
 #add_definitions("-DIMGUI_DISABLE_OBSOLETE_FUNCTIONS=1")
 
 set(IMGUI_SOURCES
@@ -20,10 +40,6 @@ set(IMGUI_SOURCES
 	${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/imgui_widgets.cpp
 # ${CMAKE_CURRENT_LIST_DIR}/cimgui_internal.cpp
 
-  # Backend drivers
-	${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/backends/imgui_impl_glfw.cpp
-	${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/backends/imgui_impl_opengl3.cpp
-  ${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/backends/imgui_impl_sdl2.cpp
 )
 
 #--------------------------
@@ -118,6 +134,21 @@ set(EXRA_LIBS_SOURCES
   ${CMAKE_CURRENT_LIST_DIR}/../libc/cimplot3d/cimplot3d.cpp
 )
 
+# Backend drivers
+set(IMPL_GLFW_OPENGL3
+	${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/backends/imgui_impl_glfw.cpp
+	${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/backends/imgui_impl_opengl3.cpp
+)
+set(IMPL_SDL3_OPENGL3
+  ${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/backends/imgui_impl_sdl3.cpp
+	${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/backends/imgui_impl_opengl3.cpp
+)
+set(IMPL_SDL3_SDLRENDERER3
+  ${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/backends/imgui_impl_sdl3.cpp
+	${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/backends/imgui_impl_sdlrenderer3.cpp
+)
+
+
 set(IMGUI_LIBRARIES )
 
 # For " Policy CMP0042 is not set: MACOSX_RPATH is enabled by default."
@@ -141,30 +172,24 @@ endif(WIN32)
 #if (IMGUI_STATIC)
 #    add_library(imgui STATIC ${IMGUI_SOURCES})
 #else (IMGUI_STATIC)
-add_library(imgui SHARED ${IMGUI_SOURCES} ${EXRA_LIBS_SOURCES})
+add_library(imgui SHARED ${IMGUI_SOURCES} ${EXRA_LIBS_SOURCES} ${IMPL_GLFW_OPENGL3})
     if (WIN32)
-      #target_link_libraries(imgui imm32)
-		# Export all original ImGui symbols to support other libraries (e.g. ImNodes)
-		# Note that these settings below didn't work as I expeced on Windows/MSys2 environment.
-		set(WINDOWS_EXPORT_ALL_SYMBOLS ON)
-		#  set(CMAKE_SUPPORT_WINDOWS_EXPORT_ALL_SYMBOLS 1)
-		# So I add linker option 'export-all-symbols' explicitly.
-    #set (CMAKE_SHARED_LINKER_FLAGS "-Wl,--export-all-symbols")
+        #target_link_libraries(imgui imm32)
+      # Export all original ImGui symbols to support other libraries (e.g. ImNodes)
+      # Note that these settings below didn't work as I expeced on Windows/MSys2 environment.
+      set(WINDOWS_EXPORT_ALL_SYMBOLS ON)
+      #  set(CMAKE_SUPPORT_WINDOWS_EXPORT_ALL_SYMBOLS 1)
+      # So I add linker option 'export-all-symbols' explicitly.
+      #set (CMAKE_SHARED_LINKER_FLAGS "-Wl,--export-all-symbols")
     endif(WIN32)
     #endif (IMGUI_STATIC)
+add_library(imgui_sdl3_opengl3 SHARED ${IMGUI_SOURCES} ${EXRA_LIBS_SOURCES} ${IMPL_SDL3_OPENGL3})
+add_library(imgui_sdlrenderer3 SHARED ${IMGUI_SOURCES} ${EXRA_LIBS_SOURCES} ${IMPL_SDLRENDERER3})
 
-#-----------------
-# Silent warnings
-#-----------------
-# for gcc 15.2.0
-target_compile_options(imgui PRIVATE -Wno-deprecated-enum-enum-conversion)
-target_compile_options(imgui PRIVATE -Wno-deprecated-declarations)
-# for clang 21.1.1
-target_compile_options(imgui PRIVATE -Wno-enum-enum-conversion)
-target_compile_options(imgui PRIVATE -Wno-return-type-c-linkage)
-target_compile_options(imgui PRIVATE -Wno-format)
 
 set_target_properties(imgui PROPERTIES PREFIX "")
+set_target_properties(imgui_sdl3_opengl3 PROPERTIES PREFIX "")
+set_target_properties(imgui_sdlrenderer3 PROPERTIES PREFIX "")
 
 if (APPLE)
     set_target_properties(imgui PROPERTIES
@@ -175,16 +200,17 @@ endif (APPLE)
 find_package(PkgConfig REQUIRED)
 #find_package(glfw3 3.4 REQUIRED)
 
-find_package(SDL2 REQUIRED)
+find_package(SDL3 REQUIRED)
 
-#target_link_libraries(imgui PRIVATE glfw3.a imm32 SDL2::SDL2)
-target_link_libraries(imgui PRIVATE glfw3.dll.a imm32 SDL2::SDL2)
+# Use glfw3.dll: GLWF + OpenGL
+target_link_libraries(imgui PRIVATE glfw3.dll.a imm32)
+# Use glfw3.dll: GLWF + OpenGL + SDL3.dll
+target_link_libraries(imgui_sdl3_opengl3 PRIVATE imm32 SDL3::SDL3)
+target_link_libraries(imgui_sdlrenderer3 PRIVATE imm32 SDL3::SDL3)
 
-#target_compile_options(imgui PRIVATE -static-libgcc -static-libstdc++)
-target_compile_options(imgui PRIVATE -static)
 
 #install
-install(TARGETS imgui
+install(TARGETS imgui imgui_sdl3_opengl3 imgui_sdlrenderer3
               RUNTIME DESTINATION  .
               LIBRARY DESTINATION  .
               ARCHIVE DESTINATION  .

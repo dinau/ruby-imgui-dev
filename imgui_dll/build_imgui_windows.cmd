@@ -23,4 +23,5 @@ cd build
 %CMAKE_EXE% -G "MSYS Makefiles" -D CMAKE_BUILD_TYPE=Release -D BUILD_SHARED_LIBS=ON -D CMAKE_C_COMPILER=gcc ../
 %CMAKE_EXE% --build .
 copy imgui.dll ..\..\lib
+copy imgui_sdl3_opengl3.dll ..\..\lib
 popd

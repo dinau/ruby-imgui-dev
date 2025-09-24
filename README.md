@@ -36,40 +36,39 @@ This project is based on and forked awesome work
 
 The purpouses are   
 - [x] Currently for only Windows OS
-- [x] Adds raw `*.cpp` backend drivers to `imgui.dll` e.g.,  
-   - [x] imgui/backends/[imgui_impl_glfw.cpp, imgui_impl_opengl3.cpp].  
-   - [x] imgui/backends/imgui_impl_sdl2.cpp
-- [ ] `imgui.dll` may be divided to  
-   - [ ] imgui_glfw_opengl3.dll
-   - [ ] imgui_sdl2_opengl3.dll
-   - [ ] imgui_sdl2_renderer.dll 
-   - [ ] imgui_sdl3_self.dll (include renderer, sdlgpu3) 
-   - so on
-- [x] Status: Extra libraries included in `imgui.dll`,
+- `imgui.dll` is divided to  
+ 
+   | DLL                    | Backend FFI                          | Contents (CImGui +)                                |
+   | :------------------:   | -----------------------:             | ---:                                               |
+   | imgui.dll              | impl_glfw.rb<br>impl_opengl3.rb      | imgui_impl_glfw.cpp<br>imgui_impl_opengl3.cpp      |
+   | imgui_sdl3_opengl3.dll | impl_sdl3.rb<br>impl_opengl3.rb      | imgui_impl_sdl3.cpp<br>imgui_impl_opengl3.cpp      |
+   | imgui_sdlrenderer3.dll | impl_sdl3.rb<br>impl_sdlrenderer3.rb | imgui_impl_sdl3.cpp<br>imgui_impl_sdlrenderer3.cpp |
 
+- Status: Extra libraries included in `*.dll`,[^libc] 
    
-   | Extra libraries      | Demo                | Full FFI library (\*.rb)  | Compilation / link[^libc] |
-   | :------------------: | :----:              | :-----------------------: | :------------------:      |
-   | ImGuiColorTextEdit   |                     |                           | Y                         |
-   | ImGui_Toggle         | [Y][imtoggle_demo]  | [Y][imtoggle_ffi]         | Y                         |
-   | ImGuiFileDialog      |                     |                           | Y                         |
-   | ImGui-Knobs          | [Y][imknobs_demo]   | [Y][imknobs_ffi]          | Y                         |
-   | ImGuizmo             | [Y][imguizmo_demo]  | [Y][imguizmo_ffi]         | Y                         |
-   | ImNodes              |                     |                           | Y                         |
-   | ImPlot               |                     |                           | Y                         |
-   | ImPlot3D             |                     |                           | Y                         |
-   | ImPlot3D             |                     |                           | Y                         |
-   | ImSpinner            | [Y][imspinner_demo] | [Y][imspinner_ffi]        | Y                         |
+   | Extra libraries     | Demo                      | FFI (\*.rb)               |
+   | ------------------: | :----:                    | :-----------------------: |
+   | ImGuiColorTextEdit  | [Y][imcolortextedit_demo] | [Y][imcolortextedit_ffi]  |
+   | ImGui_Toggle        | [Y][imtoggle_demo]        | [Y][imtoggle_ffi]         |
+   | ImGui-Knobs         | [Y][imknobs_demo]         | [Y][imknobs_ffi]          |
+   | ImGuizmo            | [Y][imguizmo_demo]        | [Y][imguizmo_ffi]         |
+   | ImSpinner           | [Y][imspinner_demo]       | [Y][imspinner_ffi]        |
+   | ImGuiFileDialog     |                           |                           |
+   | ImNodes             |                           |                           |
+   | ImPlot              |                           |                           |
+   | ImPlot3D            |                           |                           |
 
 
 - [x] Enable CJK Input method IME flag `-D IMGUI_ENABLE_WIN32_DEFAULT_IME_FUNCTIONS` 
 - [ ] Set `ImDrawIdx` to 32bit type for `ImPlot` / `ImPlot3D`
 
+[imcolortextedit_demo]:https://github.com/dinau/igruby_examples/blob/main/glfw_opengl3_imcolortextedit/glfw_opengl3_imcolortextedit.rb
 [imspinner_demo]:https://github.com/dinau/igruby_examples/blob/main/glfw_opengl3_imspinner/glfw_opengl3_imspinner.rb
 [imknobs_demo]:https://github.com/dinau/igruby_examples/blob/main/glfw_opengl3_imknobs/glfw_opengl3_imknobs.rb
 [imtoggle_demo]:https://github.com/dinau/igruby_examples/blob/main/glfw_opengl3_imtoggle/glfw_opengl3_imtoggle.rb
 [imguizmo_demo]:https://github.com/dinau/igruby_examples/blob/main/glfw_opengl3_imguizmo/glfw_opengl3_imguizmo.rb
 
+[imcolortextedit_ffi]:https://github.com/dinau/igruby_examples/blob/main/libs/imcolortextedit.rb
 [imspinner_ffi]:https://github.com/dinau/igruby_examples/blob/main/libs/imspinner.rb
 [imknobs_ffi]:https://github.com/dinau/igruby_examples/blob/main/libs/imknobs.rb
 [imtoggle_ffi]:https://github.com/dinau/igruby_examples/blob/main/libs/imtoggle.rb
@@ -144,21 +143,27 @@ r.bat           # or double click glfw_oepngl3.rbw in Windows file explorer
 Note: Currnetly under bundler enviroment only 
 
 
-#### Building libraries
+#### Building DLLs
 
 ---
 
 - Install Ruby Devkit or MSys/MinGW, at least
 
   ```sh
-  pacman -S make mingw-w64-x86_64-{gcc,clang,SDL2,pkg-config,glfw} 
+  pacman -S make mingw-w64-x86_64-{gcc,clang,SDL2,sdl3,pkg-config,glfw,ninja} 
   ```
 
 - GCC 15.2.0
 - Clang 21.1.1
 
-WIP: Same as original
+- Build dlls
 
+   ```sh
+   pwd
+   ruby-imgui-dev
+   cd imgui_dll
+   make
+   ```
 
 #### Gallery
 
