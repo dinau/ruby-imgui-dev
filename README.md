@@ -8,9 +8,11 @@
   - [Executing example programs](#executing-example-programs)
   - [Building libraries](#building-libraries)
   - [Gallery](#gallery)
+  - [ImGui-Toggle / CImGui-Toggle](#imgui-toggle--cimgui-toggle)
     - [ImGui-Knobs / CImGui-Knobs](#imgui-knobs--cimgui-knobs)
     - [ImSpinner / CImSpinner](#imspinner--cimspinner)
     - [Iconfonts viewer](#iconfonts-viewer)
+  - [ImGuizmo / CImGuizmo](#imguizmo--cimguizmo)
     - [Image view](#image-view)
     - [Show CJK fonts](#show-cjk-fonts)
   - [License](#license)
@@ -43,24 +45,37 @@ The purpouses are
    - [ ] imgui_sdl2_renderer.dll 
    - [ ] imgui_sdl3_self.dll (include renderer, sdlgpu3) 
    - so on
-- [x] Status: Adds extra libraries to `imgui.dll` e.g.,
+- [x] Status: Extra libraries included in `imgui.dll`,
+
    
-   |                    | Demo | Compilation / link | Full FFI library (\*.rb) |
-   |:------------------:|:----:|:------------------:|:-----------------------:|
-   | ImGuiColorTextEdit |      |          v         |                         |
-   |    ImGui_Toggle    |   v  |          v         |                         |
-   |   ImGuiFileDialog  |      |          v         |                         |
-   |     ImGui-Knobs    |   v  |          v         |            v            |
-   |      ImGuizmo      |      |          v         |                         |
-   |       ImNodes      |      |          v         |                         |
-   |       ImPlot       |      |          v         |                         |
-   |      ImPlot3D      |      |          v         |                         |
-   |      ImPlot3D      |      |          v         |                         |
-   |      ImSpinner     |   v  |          v         |                         |
+   | Extra libraries      | Demo                | Full FFI library (\*.rb)  | Compilation / link[^libc] |
+   | :------------------: | :----:              | :-----------------------: | :------------------:      |
+   | ImGuiColorTextEdit   |                     |                           | Y                         |
+   | ImGui_Toggle         | [Y][imtoggle_demo]  | [Y][imtoggle_ffi]         | Y                         |
+   | ImGuiFileDialog      |                     |                           | Y                         |
+   | ImGui-Knobs          | [Y][imknobs_demo]   | [Y][imknobs_ffi]          | Y                         |
+   | ImGuizmo             | [Y][imguizmo_demo]  | [Y][imguizmo_ffi]         | Y                         |
+   | ImNodes              |                     |                           | Y                         |
+   | ImPlot               |                     |                           | Y                         |
+   | ImPlot3D             |                     |                           | Y                         |
+   | ImPlot3D             |                     |                           | Y                         |
+   | ImSpinner            | [Y][imspinner_demo] | [Y][imspinner_ffi]        | Y                         |
 
 
 - [x] Enable CJK Input method IME flag `-D IMGUI_ENABLE_WIN32_DEFAULT_IME_FUNCTIONS` 
 - [ ] Set `ImDrawIdx` to 32bit type for `ImPlot` / `ImPlot3D`
+
+[imspinner_demo]:https://github.com/dinau/igruby_examples/blob/main/glfw_opengl3_imspinner/glfw_opengl3_imspinner.rb
+[imknobs_demo]:https://github.com/dinau/igruby_examples/blob/main/glfw_opengl3_imknobs/glfw_opengl3_imknobs.rb
+[imtoggle_demo]:https://github.com/dinau/igruby_examples/blob/main/glfw_opengl3_imtoggle/glfw_opengl3_imtoggle.rb
+[imguizmo_demo]:https://github.com/dinau/igruby_examples/blob/main/glfw_opengl3_imguizmo/glfw_opengl3_imguizmo.rb
+
+[imspinner_ffi]:https://github.com/dinau/igruby_examples/blob/main/libs/imspinner.rb
+[imknobs_ffi]:https://github.com/dinau/igruby_examples/blob/main/libs/imknobs.rb
+[imtoggle_ffi]:https://github.com/dinau/igruby_examples/blob/main/libs/imtoggle.rb
+[imguizmo_ffi]:https://github.com/dinau/igruby_examples/blob/main/libs/imguizmo.rb
+
+[^libc]:See [libc](libc) folder
 
 #### Prerequisites
 
@@ -151,6 +166,16 @@ WIP: Same as original
 
 From [igRuby example project](https://github.com/dinau/igruby_examples)
 
+#### ImGui-Toggle / CImGui-Toggle
+
+---
+
+[ImGui-Toggle](https://github.com/cmdwtf/imgui_toggle) / [CImGui-Toggle](https://github.com/dinau/cimgui_toggle)
+
+[glfw_opengl3_imtoggle.rb](https://github.com/dinau/igruby_examples/blob/main/glfw_opengl3_imtoggle/glfw_opengl3_imtoggle.rb)  
+
+![alt](https://github.com/dinau/igruby_examples/raw/main/img/imtoggle.png)  
+
 ##### ImGui-Knobs / CImGui-Knobs
 
 ---
@@ -176,6 +201,17 @@ From [igRuby example project](https://github.com/dinau/igruby_examples)
 ---
 
 ![alt](https://github.com/dinau/igruby_examples/raw/main/img/glfw_opengl3_iconfont_viewer.png)
+
+#### ImGuizmo / CImGuizmo
+
+---
+
+[ImGuizmo](https://github.com/CedricGuillemet/ImGuizmo) / [CImGuizmo](https://github.com/cimgui/cimguizmo)
+
+[glfw_opengl3_imguizmo.rb](https://github.com/dinau/igruby_examples/raw/main/glfw_opengl3_imguizmo/glfw_opengl3_imguizmo.rb)  
+
+![alt](https://github.com/dinau/igruby_examples/raw/main/img/imguizmo.png)
+
 
 ##### Image view
 
