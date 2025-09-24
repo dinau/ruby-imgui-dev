@@ -184,7 +184,7 @@ From [igRuby example project](https://github.com/dinau/igruby_examples)
 
 [glfw_opengl3_imknobs.rb](https://github.com/dinau/igruby_examples/raw/main/glfw_opengl3_imknobs/glfw_opengl3_imknobs.rb)
 
-![alt](https://github.com/dinau/igruby_examples/raw/main/img/glfw_opengl3_imknobs.png)  
+![alt](https://github.com/dinau/igruby_examples/raw/main/img/imknobs.png)  
 
 ##### ImSpinner / CImSpinner
 
@@ -194,13 +194,13 @@ From [igRuby example project](https://github.com/dinau/igruby_examples)
 
 [glfw_opengl3_imspinner.rb](https://github.com/dinau/igruby_examples/raw/main/glfw_opengl3_imspinner/glfw_opengl3_imspinner.rb)  
 
-![alt](https://github.com/dinau/igruby_examples/raw/main/img/glfw_opengl3_imspinner.gif)
+![alt](https://github.com/dinau/igruby_examples/raw/main/img/imspinner.gif)
 
 ##### Iconfonts viewer
 
 ---
 
-![alt](https://github.com/dinau/igruby_examples/raw/main/img/glfw_opengl3_iconfont_viewer.png)
+![alt](https://github.com/dinau/igruby_examples/raw/main/img/iconfont_viewer.png)
 
 #### ImGuizmo / CImGuizmo
 
