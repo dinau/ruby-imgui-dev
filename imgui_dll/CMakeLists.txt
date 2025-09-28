@@ -139,6 +139,14 @@ set(IMPL_GLFW_OPENGL3
 	${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/backends/imgui_impl_glfw.cpp
 	${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/backends/imgui_impl_opengl3.cpp
 )
+set(IMPL_SDL2_OPENGL3
+  ${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/backends/imgui_impl_sdl2.cpp
+	${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/backends/imgui_impl_opengl3.cpp
+)
+set(IMPL_SDL2_SDLRENDERER2
+  ${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/backends/imgui_impl_sdl2.cpp
+	${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/backends/imgui_impl_sdlrenderer2.cpp
+)
 set(IMPL_SDL3_OPENGL3
   ${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/backends/imgui_impl_sdl3.cpp
 	${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/backends/imgui_impl_opengl3.cpp
@@ -183,11 +191,18 @@ add_library(imgui SHARED ${IMGUI_SOURCES} ${EXRA_LIBS_SOURCES} ${IMPL_GLFW_OPENG
       #set (CMAKE_SHARED_LINKER_FLAGS "-Wl,--export-all-symbols")
     endif(WIN32)
     #endif (IMGUI_STATIC)
+
+add_library(imgui_sdl2_opengl3 SHARED ${IMGUI_SOURCES} ${EXRA_LIBS_SOURCES} ${IMPL_SDL2_OPENGL3})
+add_library(imgui_sdlrenderer2 SHARED ${IMGUI_SOURCES} ${EXRA_LIBS_SOURCES} ${IMPL_SDLRENDERER2})
+
 add_library(imgui_sdl3_opengl3 SHARED ${IMGUI_SOURCES} ${EXRA_LIBS_SOURCES} ${IMPL_SDL3_OPENGL3})
 add_library(imgui_sdlrenderer3 SHARED ${IMGUI_SOURCES} ${EXRA_LIBS_SOURCES} ${IMPL_SDLRENDERER3})
 
 
+# Generate imgui*.dll but libimgui*.dll
 set_target_properties(imgui PROPERTIES PREFIX "")
+set_target_properties(imgui_sdl2_opengl3 PROPERTIES PREFIX "")
+set_target_properties(imgui_sdlrenderer2 PROPERTIES PREFIX "")
 set_target_properties(imgui_sdl3_opengl3 PROPERTIES PREFIX "")
 set_target_properties(imgui_sdlrenderer3 PROPERTIES PREFIX "")
 
@@ -200,18 +215,23 @@ endif (APPLE)
 find_package(PkgConfig REQUIRED)
 #find_package(glfw3 3.4 REQUIRED)
 
+find_package(SDL2 REQUIRED)
 find_package(SDL3 REQUIRED)
 
 # Use glfw3.dll: GLWF + OpenGL
 target_link_libraries(imgui PRIVATE glfw3.dll.a imm32)
-# Use glfw3.dll: GLWF + OpenGL + SDL3.dll
+# Use SDL2/3.dll
+target_link_libraries(imgui_sdl2_opengl3 PRIVATE imm32 SDL2::SDL2)
+target_link_libraries(imgui_sdlrenderer2 PRIVATE imm32 SDL2::SDL2)
 target_link_libraries(imgui_sdl3_opengl3 PRIVATE imm32 SDL3::SDL3)
 target_link_libraries(imgui_sdlrenderer3 PRIVATE imm32 SDL3::SDL3)
 
 
 #install
-install(TARGETS imgui imgui_sdl3_opengl3 imgui_sdlrenderer3
-              RUNTIME DESTINATION  .
-              LIBRARY DESTINATION  .
-              ARCHIVE DESTINATION  .
+install(TARGETS imgui
+                imgui_sdl2_opengl3 imgui_sdlrenderer2
+                imgui_sdl3_opengl3 imgui_sdlrenderer3
+                RUNTIME DESTINATION  .
+                LIBRARY DESTINATION  .
+                ARCHIVE DESTINATION  .
               )

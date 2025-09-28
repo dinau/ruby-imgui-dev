@@ -2,8 +2,10 @@ NINJA = true
 CLANG = true
 
 TARGETS += imgui.dll
-TARGETS += imgui_sdlrenderer3.dll
+TARGETS += imgui_sdl2_opengl3.dll
+TARGETS += imgui_sdlrenderer2.dll
 TARGETS += imgui_sdl3_opengl3.dll
+TARGETS += imgui_sdlrenderer3.dll
 
 ifeq ($(NINJA),true)
 	BUILD_SYSTEM = "Ninja"

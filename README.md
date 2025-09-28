@@ -6,13 +6,14 @@
   - [Prerequisites](#prerequisites)
   - [Install dlls on Windows OS](#install-dlls-on-windows-os)
   - [Executing example programs](#executing-example-programs)
-  - [Building libraries](#building-libraries)
-  - [Gallery](#gallery)
-  - [ImGui-Toggle / CImGui-Toggle](#imgui-toggle--cimgui-toggle)
+  - [Building DLLs yourself](#building-dlls-yourself)
+  - [Screenshots](#screenshots)
+    - [ImGui-Toggle / CImGui-Toggle](#imgui-toggle--cimgui-toggle)
     - [ImGui-Knobs / CImGui-Knobs](#imgui-knobs--cimgui-knobs)
     - [ImSpinner / CImSpinner](#imspinner--cimspinner)
+    - [ImGuizmo / CImGuizmo](#imguizmo--cimguizmo)
+    - [ImNodes / CImNodes](#imnodes--cimnodes)
     - [Iconfonts viewer](#iconfonts-viewer)
-  - [ImGuizmo / CImGuizmo](#imguizmo--cimguizmo)
     - [Image view](#image-view)
     - [Show CJK fonts](#show-cjk-fonts)
   - [License](#license)
@@ -36,27 +37,26 @@ This project is based on and forked awesome work
 
 The purpouses are   
 - [x] Currently for only Windows OS
-- `imgui.dll` is divided to  
+- `imgui.dll` may be divided to  
  
    | DLL                    | Backend FFI                          | Contents (CImGui +)                                |
    | :------------------:   | -----------------------:             | ---:                                               |
    | imgui.dll              | impl_glfw.rb<br>impl_opengl3.rb      | imgui_impl_glfw.cpp<br>imgui_impl_opengl3.cpp      |
+   | imgui_sdl2_opengl3.dll | impl_sdl2.rb<br>impl_opengl3.rb      | imgui_impl_sdl2.cpp<br>imgui_impl_opengl3.cpp      |
+   | imgui_sdlrenderer2.dll | impl_sdl2.rb<br>impl_sdlrenderer2.rb | imgui_impl_sdl2.cpp<br>imgui_impl_sdlrenderer2.cpp |
    | imgui_sdl3_opengl3.dll | impl_sdl3.rb<br>impl_opengl3.rb      | imgui_impl_sdl3.cpp<br>imgui_impl_opengl3.cpp      |
    | imgui_sdlrenderer3.dll | impl_sdl3.rb<br>impl_sdlrenderer3.rb | imgui_impl_sdl3.cpp<br>imgui_impl_sdlrenderer3.cpp |
 
 - Status: Extra libraries included in `*.dll`,[^libc] 
-   
-   | Extra libraries     | Demo                      | FFI (\*.rb)               |
-   | ------------------: | :----:                    | :-----------------------: |
-   | ImGuiColorTextEdit  | [Y][imcolortextedit_demo] | [Y][imcolortextedit_ffi]  |
-   | ImGui_Toggle        | [Y][imtoggle_demo]        | [Y][imtoggle_ffi]         |
-   | ImGui-Knobs         | [Y][imknobs_demo]         | [Y][imknobs_ffi]          |
-   | ImGuizmo            | [Y][imguizmo_demo]        | [Y][imguizmo_ffi]         |
-   | ImSpinner           | [Y][imspinner_demo]       | [Y][imspinner_ffi]        |
-   | ImGuiFileDialog     |                           |                           |
-   | ImNodes             |                           |                           |
-   | ImPlot              |                           |                           |
-   | ImPlot3D            |                           |                           |
+   - [X] ImGuiColorTextEdit 
+   - [X] ImGui_Toggle       
+   - [X] ImGui-Knobs        
+   - [X] ImGuizmo           
+   - [X] ImSpinner          
+   - [X] ImNodes            
+   - [ ] ImGuiFileDialog    
+   - [ ] ImPlot             
+   - [ ] ImPlot3D           
 
 
 - [x] Enable CJK Input method IME flag `-D IMGUI_ENABLE_WIN32_DEFAULT_IME_FUNCTIONS` 
@@ -67,12 +67,14 @@ The purpouses are
 [imknobs_demo]:https://github.com/dinau/igruby_examples/blob/main/glfw_opengl3_imknobs/glfw_opengl3_imknobs.rb
 [imtoggle_demo]:https://github.com/dinau/igruby_examples/blob/main/glfw_opengl3_imtoggle/glfw_opengl3_imtoggle.rb
 [imguizmo_demo]:https://github.com/dinau/igruby_examples/blob/main/glfw_opengl3_imguizmo/glfw_opengl3_imguizmo.rb
+[imnodes_demo]:https://github.com/dinau/igruby_examples/blob/main/glfw_opengl3_imnodes/glfw_opengl3_imnodes.rb
 
 [imcolortextedit_ffi]:https://github.com/dinau/igruby_examples/blob/main/libs/imcolortextedit.rb
 [imspinner_ffi]:https://github.com/dinau/igruby_examples/blob/main/libs/imspinner.rb
 [imknobs_ffi]:https://github.com/dinau/igruby_examples/blob/main/libs/imknobs.rb
 [imtoggle_ffi]:https://github.com/dinau/igruby_examples/blob/main/libs/imtoggle.rb
 [imguizmo_ffi]:https://github.com/dinau/igruby_examples/blob/main/libs/imguizmo.rb
+[imnodes_ffi]:https://github.com/dinau/igruby_examples/blob/main/libs/imnodes.rb
 
 [^libc]:See [libc](libc) folder
 
@@ -140,21 +142,24 @@ cd glfw_opengl3
 r.bat           # or double click glfw_oepngl3.rbw in Windows file explorer
 ```
 
-Note: Currnetly under bundler enviroment only 
+Note: Only supported under bundler enviroment at this moment 
 
 
-#### Building DLLs
+#### Building DLLs yourself
 
 ---
+
+If you'd like to build Dlls yourself, 
+
 
 - Install Ruby Devkit or MSys/MinGW, at least
 
   ```sh
-  pacman -S make mingw-w64-x86_64-{gcc,clang,SDL2,sdl3,pkg-config,glfw,ninja} 
+  pacman -S make mingw-w64-x86_64-{cmake,gcc,clang,SDL2,sdl3,pkg-config,glfw,ninja} 
   ```
 
-- GCC 15.2.0
-- Clang 21.1.1
+- Clang 21.1.1 : Default compiler
+- (GCC 15.2.0)
 
 - Build dlls
 
@@ -165,13 +170,13 @@ Note: Currnetly under bundler enviroment only
    make
    ```
 
-#### Gallery
+#### Screenshots
 
 ---
 
 From [igRuby example project](https://github.com/dinau/igruby_examples)
 
-#### ImGui-Toggle / CImGui-Toggle
+##### ImGui-Toggle / CImGui-Toggle
 
 ---
 
@@ -201,13 +206,7 @@ From [igRuby example project](https://github.com/dinau/igruby_examples)
 
 ![alt](https://github.com/dinau/igruby_examples/raw/main/img/imspinner.gif)
 
-##### Iconfonts viewer
-
----
-
-![alt](https://github.com/dinau/igruby_examples/raw/main/img/iconfont_viewer.png)
-
-#### ImGuizmo / CImGuizmo
+##### ImGuizmo / CImGuizmo
 
 ---
 
@@ -217,6 +216,21 @@ From [igRuby example project](https://github.com/dinau/igruby_examples)
 
 ![alt](https://github.com/dinau/igruby_examples/raw/main/img/imguizmo.png)
 
+##### ImNodes / CImNodes
+
+---
+
+[ImNodes](https://github.com/Nelarius/imnodes) / [CImNodes](https://github.com/cimgui/cimnodes)
+
+[glfw_opengl3_imnodes.rb](https://github.com/dinau/igruby_examples/blob/main/glfw_opengl3_imnodes/glfw_opengl3_imnodes.rb)  
+
+![alt](https://github.com/dinau/igruby_examples/raw/main/img/imnodes.png)
+
+##### Iconfonts viewer
+
+---
+
+![alt](https://github.com/dinau/igruby_examples/raw/main/img/iconfont_viewer.png)
 
 ##### Image view
 
