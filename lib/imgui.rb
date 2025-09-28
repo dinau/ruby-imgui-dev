@@ -3340,7 +3340,7 @@ module ImGui
       [:igIsKeyChordPressed, [:int], :bool],
       [:igIsKeyDown, [:int], :bool],
       [:igIsKeyPressed, [:int, :bool], :bool],
-      [:igIsKeyReleased, [:int], :bool],
+      [:igIsKeyReleased_Nil, [:int], :bool],
       [:igIsMouseClicked, [:int, :bool], :bool],
       [:igIsMouseDoubleClicked_Nil, [:int], :bool],
       [:igIsMouseDown, [:int], :bool],
@@ -4870,7 +4870,7 @@ module ImGui
   # arg: key(ImGuiKey)
   # ret: bool
   def self.IsKeyReleased(key)  # was key released (went from Down to !Down)?
-    igIsKeyReleased(key)
+    igIsKeyReleased_Nil(key)
   end
 
   # arg: button(ImGuiMouseButton), repeat(bool)
