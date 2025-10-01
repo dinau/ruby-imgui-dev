@@ -38,7 +38,7 @@ set(IMGUI_SOURCES
 	${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/imgui_demo.cpp
 	${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/imgui_tables.cpp
 	${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/imgui_widgets.cpp
-# ${CMAKE_CURRENT_LIST_DIR}/cimgui_internal.cpp
+  ${CMAKE_CURRENT_LIST_DIR}/cimgui_internal.cpp
 
 )
 
@@ -72,11 +72,12 @@ include_directories( ${CMAKE_CURRENT_LIST_DIR}/../libc/cimCTE)
 include_directories( ${CMAKE_CURRENT_LIST_DIR}/../libc/cimCTE/ImGuiColorTextEdit)
 include_directories( ${CMAKE_CURRENT_LIST_DIR}/../libc/cimCTE/ImGuiColorTextEdit/vendor/regex/include)
 
-# filedialog
+# ImGuiFileDialog
+add_definitions(-DUSE_THUMBNAILS)
+add_definitions(-DCUSTOM_IMGUIFILEDIALOG_CONFIG=\"customIconFont.h\")
 include_directories( ${CMAKE_CURRENT_LIST_DIR}../../libc/CImGuiFileDialog)
 include_directories( ${CMAKE_CURRENT_LIST_DIR}../../libc/CImGuiFileDialog/libs/ImGuiFileDialog)
 include_directories( ${CMAKE_CURRENT_LIST_DIR}../../libc/fonticon)
-add_compile_definitions(CUSTOM_IMGUIFILEDIALOG_CONFIG=\"customIconFont.h\")
 
 # ImGuizmo
 file(GLOB IMGUIZMO_SRCS ${CMAKE_CURRENT_LIST_DIR}/../libc/cimguizmo/ImGuiZmo/*.cpp)
@@ -138,22 +139,22 @@ set(EXRA_LIBS_SOURCES
 set(IMPL_GLFW_OPENGL3
 	${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/backends/imgui_impl_glfw.cpp
 	${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/backends/imgui_impl_opengl3.cpp
+	${CMAKE_CURRENT_LIST_DIR}/../libc/tools.c
 )
-set(IMPL_SDL2_OPENGL3
+set(IMPL_SDL2
   ${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/backends/imgui_impl_sdl2.cpp
 	${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/backends/imgui_impl_opengl3.cpp
-)
-set(IMPL_SDL2_SDLRENDERER2
-  ${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/backends/imgui_impl_sdl2.cpp
 	${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/backends/imgui_impl_sdlrenderer2.cpp
+  #${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/backends/imgui_impl_vulkan.cpp
+	${CMAKE_CURRENT_LIST_DIR}/../libc/tools.c
 )
-set(IMPL_SDL3_OPENGL3
+set(IMPL_SDL3
   ${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/backends/imgui_impl_sdl3.cpp
 	${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/backends/imgui_impl_opengl3.cpp
-)
-set(IMPL_SDL3_SDLRENDERER3
-  ${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/backends/imgui_impl_sdl3.cpp
 	${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/backends/imgui_impl_sdlrenderer3.cpp
+	${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/backends/imgui_impl_sdlgpu3.cpp
+  #${CMAKE_CURRENT_LIST_DIR}/cimgui/imgui/backends/imgui_impl_vulkan.cpp
+	${CMAKE_CURRENT_LIST_DIR}/../libc/tools.c
 )
 
 
@@ -167,10 +168,12 @@ endif (APPLE)
 add_definitions("-DIMGUI_ENABLE_WIN32_DEFAULT_IME_FUNCTIONS")
 if (WIN32)
     add_definitions("-DIMGUI_IMPL_API=extern \"C\" __declspec\(dllexport\)")
-    add_definitions("-DCIMSPINNER_API=extern \"C\" __declspec\(dllexport\)")
+    add_definitions("-DCIMSPINNER_API=extern \"C\" __declspec\(dllexport\)") # for ImSpinner
+    add_definitions("-DIGFD_API=__declspec\(dllexport\)")                    # for ImGuiFileDialog
 else(WIN32)
     add_definitions("-DIMGUI_IMPL_API=extern \"C\" ")
-    add_definitions("-DCIMSPINNER_API=extern \"C\" ")
+    add_definitions("-DCIMSPINNER_API=extern \"C\" ") # for ImSpinner
+    add_definitions("-DIGFD_API=extern \"C\" ")       # for ImGuiFileDialog
 endif(WIN32)
 
 #set(IMGUI_STATIC "no" CACHE STRING "Build as a static library")
@@ -192,19 +195,14 @@ add_library(imgui SHARED ${IMGUI_SOURCES} ${EXRA_LIBS_SOURCES} ${IMPL_GLFW_OPENG
     endif(WIN32)
     #endif (IMGUI_STATIC)
 
-add_library(imgui_sdl2_opengl3 SHARED ${IMGUI_SOURCES} ${EXRA_LIBS_SOURCES} ${IMPL_SDL2_OPENGL3})
-add_library(imgui_sdlrenderer2 SHARED ${IMGUI_SOURCES} ${EXRA_LIBS_SOURCES} ${IMPL_SDLRENDERER2})
-
-add_library(imgui_sdl3_opengl3 SHARED ${IMGUI_SOURCES} ${EXRA_LIBS_SOURCES} ${IMPL_SDL3_OPENGL3})
-add_library(imgui_sdlrenderer3 SHARED ${IMGUI_SOURCES} ${EXRA_LIBS_SOURCES} ${IMPL_SDLRENDERER3})
+add_library(imgui_sdl2 SHARED ${IMGUI_SOURCES} ${EXRA_LIBS_SOURCES} ${IMPL_SDL2})
+add_library(imgui_sdl3 SHARED ${IMGUI_SOURCES} ${EXRA_LIBS_SOURCES} ${IMPL_SDL3})
 
 
 # Generate imgui*.dll but libimgui*.dll
 set_target_properties(imgui PROPERTIES PREFIX "")
-set_target_properties(imgui_sdl2_opengl3 PROPERTIES PREFIX "")
-set_target_properties(imgui_sdlrenderer2 PROPERTIES PREFIX "")
-set_target_properties(imgui_sdl3_opengl3 PROPERTIES PREFIX "")
-set_target_properties(imgui_sdlrenderer3 PROPERTIES PREFIX "")
+set_target_properties(imgui_sdl2 PROPERTIES PREFIX "")
+set_target_properties(imgui_sdl3 PROPERTIES PREFIX "")
 
 if (APPLE)
     set_target_properties(imgui PROPERTIES
@@ -221,16 +219,14 @@ find_package(SDL3 REQUIRED)
 # Use glfw3.dll: GLWF + OpenGL
 target_link_libraries(imgui PRIVATE glfw3.dll.a imm32)
 # Use SDL2/3.dll
-target_link_libraries(imgui_sdl2_opengl3 PRIVATE imm32 SDL2::SDL2)
-target_link_libraries(imgui_sdlrenderer2 PRIVATE imm32 SDL2::SDL2)
-target_link_libraries(imgui_sdl3_opengl3 PRIVATE imm32 SDL3::SDL3)
-target_link_libraries(imgui_sdlrenderer3 PRIVATE imm32 SDL3::SDL3)
+target_link_libraries(imgui_sdl2 PRIVATE imm32 SDL2::SDL2)
+target_link_libraries(imgui_sdl3 PRIVATE imm32 SDL3::SDL3)
 
 
 #install
 install(TARGETS imgui
-                imgui_sdl2_opengl3 imgui_sdlrenderer2
-                imgui_sdl3_opengl3 imgui_sdlrenderer3
+                imgui_sdl2
+                imgui_sdl3
                 RUNTIME DESTINATION  .
                 LIBRARY DESTINATION  .
                 ARCHIVE DESTINATION  .

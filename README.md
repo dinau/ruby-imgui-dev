@@ -4,7 +4,7 @@
 - [Dev version: Yet another ImGui wrapper for Ruby](#dev-version-yet-another-imgui-wrapper-for-ruby)
   - [Purpouses](#purpouses)
   - [Prerequisites](#prerequisites)
-  - [Install dlls on Windows OS](#install-dlls-on-windows-os)
+  - [Install DLLs on Windows OS](#install-dlls-on-windows-os)
   - [Executing example programs](#executing-example-programs)
   - [Building DLLs yourself](#building-dlls-yourself)
   - [Screenshots](#screenshots)
@@ -13,14 +13,15 @@
     - [ImSpinner / CImSpinner](#imspinner--cimspinner)
     - [ImGuizmo / CImGuizmo](#imguizmo--cimguizmo)
     - [ImNodes / CImNodes](#imnodes--cimnodes)
+    - [ImGuiFileDialog](#imguifiledialog)
     - [Iconfonts viewer](#iconfonts-viewer)
-    - [Image view](#image-view)
+    - [Image loading](#image-loading)
     - [Show CJK fonts](#show-cjk-fonts)
   - [License](#license)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-### Dev version: Yet another ImGui wrapper for Ruby 
+### Dev. version: Yet another ImGui wrapper for Ruby 
 
 ---
 
@@ -47,14 +48,14 @@ The purpouses are
    | imgui_sdl3_opengl3.dll | impl_sdl3.rb<br>impl_opengl3.rb      | imgui_impl_sdl3.cpp<br>imgui_impl_opengl3.cpp      |
    | imgui_sdlrenderer3.dll | impl_sdl3.rb<br>impl_sdlrenderer3.rb | imgui_impl_sdl3.cpp<br>imgui_impl_sdlrenderer3.cpp |
 
-- Status: Extra libraries included in `*.dll`,[^libc] 
+- Status: Extra libraries included in `*.dll`,[^libc]  
    - [X] ImGuiColorTextEdit 
    - [X] ImGui_Toggle       
    - [X] ImGui-Knobs        
    - [X] ImGuizmo           
    - [X] ImSpinner          
    - [X] ImNodes            
-   - [ ] ImGuiFileDialog    
+   - [x] ImGuiFileDialog    
    - [ ] ImPlot             
    - [ ] ImPlot3D           
 
@@ -87,7 +88,7 @@ The purpouses are
 - Use Ruby 3.4.5 or later : https://rubyinstaller.org/downloads/  
   Ok: without Devkit
 
-#### Install dlls on Windows OS
+#### Install DLLs on Windows OS
 
 ---
 
@@ -96,7 +97,7 @@ pwd
 my_dev_folder
 git clone https://github.com/dinau/igruby_examples
 cd igruby_examples
-copy dlls_extra\*.dll c:\Ruby34-x64\bin\       # Specify your Ruby bin folder 
+copy DLLs_extra\*.dll c:\Ruby34-x64\bin\       # Specify your Ruby bin folder 
 ```
 
 #### Executing example programs
@@ -161,7 +162,7 @@ If you'd like to build Dlls yourself,
 - Clang 21.1.1 : Default compiler
 - (GCC 15.2.0)
 
-- Build dlls
+- Build DLLs
 
    ```sh
    pwd
@@ -226,21 +227,39 @@ From [igRuby example project](https://github.com/dinau/igruby_examples)
 
 ![alt](https://github.com/dinau/igruby_examples/raw/main/img/imnodes.png)
 
+
+##### ImGuiFileDialog 
+
+---
+
+[ImGuiFileDialog](https://github.com/aiekick/ImGuiFileDialog)
+
+[glfw_opengl3_imguifiledialog.rb](https://github.com/dinau/igruby_examples/blob/main/glfw_opengl3_imguifiledialog/glfw_opengl3_imguifiledialog.rb)  
+
+![alt](https://github.com/dinau/igruby_examples/raw/main/img/imguifiledialog.png)
+
+
 ##### Iconfonts viewer
 
 ---
 
+[glfw_opengl3_iconfont_viewer.rb](https://github.com/dinau/igruby_examples/blob/main/glfw_opengl3_iconfont_viewer/glfw_opengl3_iconfont_viewer.rb)  
+
 ![alt](https://github.com/dinau/igruby_examples/raw/main/img/iconfont_viewer.png)
 
-##### Image view
+##### Image loading
 
 ---
+
+[glfw_opengl3.rb](https://github.com/dinau/igruby_examples/blob/main/glfw_opengl3/glfw_opengl3.rb)  
 
 ![alt](https://github.com/dinau/igruby_examples/raw/main/img/glfw_opengl3.png)  
 
 ##### Show CJK fonts
 
 ---
+
+[glfw_opengl3_jp.rb](https://github.com/dinau/igruby_examples/blob/main/glfw_opengl3_jp/glfw_opengl3_jp.rb)  
 
 ![alt](https://github.com/dinau/igruby_examples/raw/main/img/glfw_opengl3_jp.png)
 
