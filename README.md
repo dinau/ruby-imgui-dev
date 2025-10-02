@@ -40,13 +40,11 @@ The purpouses are
 - [x] Currently for only Windows OS
 - `imgui.dll` may be divided to  
  
-   | DLL                    | Backend FFI                          | Contents (CImGui +)                                |
-   | :------------------:   | -----------------------:             | ---:                                               |
-   | imgui.dll              | impl_glfw.rb<br>impl_opengl3.rb      | imgui_impl_glfw.cpp<br>imgui_impl_opengl3.cpp      |
-   | imgui_sdl2_opengl3.dll | impl_sdl2.rb<br>impl_opengl3.rb      | imgui_impl_sdl2.cpp<br>imgui_impl_opengl3.cpp      |
-   | imgui_sdlrenderer2.dll | impl_sdl2.rb<br>impl_sdlrenderer2.rb | imgui_impl_sdl2.cpp<br>imgui_impl_sdlrenderer2.cpp |
-   | imgui_sdl3_opengl3.dll | impl_sdl3.rb<br>impl_opengl3.rb      | imgui_impl_sdl3.cpp<br>imgui_impl_opengl3.cpp      |
-   | imgui_sdlrenderer3.dll | impl_sdl3.rb<br>impl_sdlrenderer3.rb | imgui_impl_sdl3.cpp<br>imgui_impl_sdlrenderer3.cpp |
+   | DLL                  | Backend FFI                                                                | Contents (CImGui +)                                    |
+   | :------------------: | -----------------------:                                                   | ---:                                                   |
+   | imgui.dll            | impl_glfw.rb<br>impl_opengl3.rb                                            | imgui_impl_glfw.cpp<br>imgui_impl_opengl3.cpp          |
+   | imgui_sdl2.dll       | impl_sdl2.rb<br>impl_opengl3.rb<br>impl_sdlrender2.rb                      | imgui_impl_sdl2.cpp<br>imgui_impl_opengl3.cpp<br>so on |
+   | imgui_sdl3.dll       | impl_sdl3.rb<br>impl_opengl3.rb<br>impl_sdlrenderer3.rb<br>impl_sdlgpu3.rb | imgui_impl_sdl3.cpp<br>imgui_impl_opengl3.cpp<br>so on |
 
 - Status: Extra libraries included in `*.dll`,[^libc]  
    - [X] ImGuiColorTextEdit 
@@ -85,20 +83,7 @@ The purpouses are
 
 - [x] WindowsOS 10 or later
 - [ ] LinuxOS : N/A (Im not familiar with Ruby on Linux OS)
-- Use Ruby 3.4.5 or later : https://rubyinstaller.org/downloads/  
-  Ok: without Devkit
-
-#### Install DLLs on Windows OS
-
----
-
-```sh
-pwd 
-my_dev_folder
-git clone https://github.com/dinau/igruby_examples
-cd igruby_examples
-copy DLLs_extra\*.dll c:\Ruby34-x64\bin\       # Specify your Ruby bin folder 
-```
+- Use RubyInstaller + **Devkit** 3.4.6 or later : https://rubyinstaller.org/downloads/  
 
 #### Executing example programs
 
@@ -146,17 +131,17 @@ r.bat           # or double click glfw_oepngl3.rbw in Windows file explorer
 Note: Only supported under bundler enviroment at this moment 
 
 
-#### Building DLLs yourself
+#### Building DLLs by yourself
 
 ---
 
-If you'd like to build Dlls yourself, 
+If you'd like to build Dlls by yourself, 
 
 
 - Install Ruby Devkit or MSys/MinGW, at least
 
   ```sh
-  pacman -S make mingw-w64-x86_64-{cmake,gcc,clang,SDL2,sdl3,pkg-config,glfw,ninja} 
+  pacman -S make mingw-w64-ucrt-x86_64-{cmake,gcc,clang,SDL2,sdl3,pkg-config,glfw,ninja} 
   ```
 
 - Clang 21.1.1 : Default compiler
@@ -175,94 +160,17 @@ If you'd like to build Dlls yourself,
 
 ---
 
-From [igRuby example project](https://github.com/dinau/igruby_examples)
-
-##### ImGui-Toggle / CImGui-Toggle
-
----
-
-[ImGui-Toggle](https://github.com/cmdwtf/imgui_toggle) / [CImGui-Toggle](https://github.com/dinau/cimgui_toggle)
-
-[glfw_opengl3_imtoggle.rb](https://github.com/dinau/igruby_examples/blob/main/glfw_opengl3_imtoggle/glfw_opengl3_imtoggle.rb)  
+See [igRuby example project](https://github.com/dinau/igruby_examples)
 
 ![alt](https://github.com/dinau/igruby_examples/raw/main/img/imtoggle.png)  
-
-##### ImGui-Knobs / CImGui-Knobs
-
----
-
-[ImGui-Knobs](https://github.com/altschuler/imgui-knobs) / [CImGui-Knobs](https://github.com/dinau/cimgui-knobs)
-
-[glfw_opengl3_imknobs.rb](https://github.com/dinau/igruby_examples/raw/main/glfw_opengl3_imknobs/glfw_opengl3_imknobs.rb)
-
 ![alt](https://github.com/dinau/igruby_examples/raw/main/img/imknobs.png)  
-
-##### ImSpinner / CImSpinner
-
----
-
-[ImSpinner](https://github.com/dalerank/imspinner) / [CImSpinner](https://github.com/dinau/cimspinner)
-
-[glfw_opengl3_imspinner.rb](https://github.com/dinau/igruby_examples/raw/main/glfw_opengl3_imspinner/glfw_opengl3_imspinner.rb)  
-
-![alt](https://github.com/dinau/igruby_examples/raw/main/img/imspinner.gif)
-
-##### ImGuizmo / CImGuizmo
-
----
-
-[ImGuizmo](https://github.com/CedricGuillemet/ImGuizmo) / [CImGuizmo](https://github.com/cimgui/cimguizmo)
-
-[glfw_opengl3_imguizmo.rb](https://github.com/dinau/igruby_examples/raw/main/glfw_opengl3_imguizmo/glfw_opengl3_imguizmo.rb)  
-
-![alt](https://github.com/dinau/igruby_examples/raw/main/img/imguizmo.png)
-
-##### ImNodes / CImNodes
-
----
-
-[ImNodes](https://github.com/Nelarius/imnodes) / [CImNodes](https://github.com/cimgui/cimnodes)
-
-[glfw_opengl3_imnodes.rb](https://github.com/dinau/igruby_examples/blob/main/glfw_opengl3_imnodes/glfw_opengl3_imnodes.rb)  
-
-![alt](https://github.com/dinau/igruby_examples/raw/main/img/imnodes.png)
-
-
-##### ImGuiFileDialog 
-
----
-
-[ImGuiFileDialog](https://github.com/aiekick/ImGuiFileDialog)
-
-[glfw_opengl3_imguifiledialog.rb](https://github.com/dinau/igruby_examples/blob/main/glfw_opengl3_imguifiledialog/glfw_opengl3_imguifiledialog.rb)  
-
-![alt](https://github.com/dinau/igruby_examples/raw/main/img/imguifiledialog.png)
-
-
-##### Iconfonts viewer
-
----
-
-[glfw_opengl3_iconfont_viewer.rb](https://github.com/dinau/igruby_examples/blob/main/glfw_opengl3_iconfont_viewer/glfw_opengl3_iconfont_viewer.rb)  
-
-![alt](https://github.com/dinau/igruby_examples/raw/main/img/iconfont_viewer.png)
-
-##### Image loading
-
----
-
-[glfw_opengl3.rb](https://github.com/dinau/igruby_examples/blob/main/glfw_opengl3/glfw_opengl3.rb)  
-
-![alt](https://github.com/dinau/igruby_examples/raw/main/img/glfw_opengl3.png)  
-
-##### Show CJK fonts
-
----
-
-[glfw_opengl3_jp.rb](https://github.com/dinau/igruby_examples/blob/main/glfw_opengl3_jp/glfw_opengl3_jp.rb)  
-
+![alt](https://github.com/dinau/igruby_examples/raw/main/img/imspinner.gif)  
+![alt](https://github.com/dinau/igruby_examples/raw/main/img/imguizmo.png)  
+![alt](https://github.com/dinau/igruby_examples/raw/main/img/imnodes.png)  
+![alt](https://github.com/dinau/igruby_examples/raw/main/img/imguifiledialog.png)  
+![alt](https://github.com/dinau/igruby_examples/raw/main/img/iconfont_viewer.png)  
+![alt](https://github.com/dinau/igruby_examples/raw/main/img/glfw_opengl3.gif)  
 ![alt](https://github.com/dinau/igruby_examples/raw/main/img/glfw_opengl3_jp.png)
-
 
 #### License 
 
